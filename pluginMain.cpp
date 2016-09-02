@@ -18,7 +18,9 @@ MStatus uninitializePlugin(MObject mobj)
 {
 	MStatus status;
 	MFnPlugin fnPlugin(mobj);
+	
 	status = fnPlugin.deregisterNode(JSStress::kId);
 	CHECK_MSTATUS_AND_RETURN_IT(status);
+	return MS::kSuccess;
 
 }
