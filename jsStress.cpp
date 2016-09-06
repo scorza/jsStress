@@ -20,6 +20,7 @@ MStatus JSStress::initialize()
 	
 	aRefMesh = fnTyped.create("referenceMesh", "referenceMesh", MFnData::kMesh);
 	fnTyped.setHidden(true);
+	fnTyped.setArray(true);
 	addAttribute(aRefMesh);
 
 	aBulgeAmount = fnNumeric.create("bulgeAmount", "bulgeAmount", MFnNumericData::kFloat, 0.5);
@@ -59,13 +60,25 @@ MStatus JSStress::deform(MDataBlock &data, MItGeometry &iterGeo, const MMatrix &
 	MDataHandle hInput = hElementInput.child(inputGeom);
 	MObject inputGeo = hInput.asMesh();
 
+	// Get ref mesh as mobject
+	MArrayDataHandle hArrayRef = data.inputArrayValue(aRefMesh);
+	
+	hArrayRef.jumpToElement(indexGeo);
+	MDataHandle hRef = hArrayRef.inputValue();
+	MObject oRef = hRef.asMesh();
+
 	MPointArray pts, outPts;
 	iterGeo.allPositions(pts, MSpace::kWorld);
 	edgeLengths_.resize(pts.length());
 	diffs_.setLength(pts.length());
 	outPts.setLength(pts.length());
 
-	MFnMesh fnMesh(inputGeo);
+	if (oRef.isNull())
+	{
+		return MS::kSuccess;
+	}
+
+	MFnMesh fnMesh(oRef);
 	MFloatVectorArray normals;
 	fnMesh.getVertexNormals(false, normals);
 
@@ -73,7 +86,7 @@ MStatus JSStress::deform(MDataBlock &data, MItGeometry &iterGeo, const MMatrix &
 	{
 		MObject pt = iterGeo.currentItem();
 		
-		MItMeshEdge iterEdge(inputGeo, pt);
+		MItMeshEdge iterEdge(oRef, pt);
 		int numEdges;
 		iterEdge.numConnectedEdges(numEdges);
 		edgeLengths_[i].setLength(numEdges);

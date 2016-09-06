@@ -1,5 +1,6 @@
 #include "common.h"
 #include "jsStress.h"
+#include "jsStressCmd.h"
 #include <maya/MFnPlugin.h>
 
 MStatus initializePlugin(MObject mobj)

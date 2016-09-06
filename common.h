@@ -5,6 +5,7 @@
 // GENERAL INCLUDES
 #include <maya/MDoubleArray.h>
 #include <maya/MPointArray.h>
+#include <maya/MSyntax.h>
 
 // ITERATOR INCLUDES
 #include <maya/MItGeometry.h>
@@ -20,4 +21,5 @@
 
 // MPX INCLUDES
 #include <maya/MPxNode.h>
+#include <maya/MPxCommand.h>
 #include <maya/MPxDeformerNode.h>

@@ -21,12 +21,18 @@
     <ClCompile Include="jsStress.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="jsStressCmd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="jsStress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jsStressCmd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
