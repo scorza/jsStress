@@ -11,6 +11,10 @@ MStatus initializePlugin(MObject mobj)
 
 	status = fnPlugin.registerNode(JSStress::kName, JSStress::kId, JSStress::creator, JSStress::initialize, MPxNode::kDeformerNode);
 	CHECK_MSTATUS_AND_RETURN_IT(status);
+	
+	status = fnPlugin.registerCommand(JSStressCmd::kName, JSStressCmd::creator, JSStressCmd::newSyntax);
+	CHECK_MSTATUS_AND_RETURN_IT(status);
+
 	return MS::kSuccess;
 
 }
@@ -19,6 +23,9 @@ MStatus uninitializePlugin(MObject mobj)
 {
 	MStatus status;
 	MFnPlugin fnPlugin(mobj);
+
+	status = fnPlugin.deregisterCommand(JSStressCmd::kName);
+	CHECK_MSTATUS_AND_RETURN_IT(status);
 	
 	status = fnPlugin.deregisterNode(JSStress::kId);
 	CHECK_MSTATUS_AND_RETURN_IT(status);
