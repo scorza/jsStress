@@ -19,10 +19,8 @@ public:
 	static MTypeId kId;
 
 	// Static attribute variables
+	static MObject aRefMesh;
 	static MObject aBulgeAmount;
-	static MObject aRedOutput;
-	static MObject aGreenOutput;
-	static MObject aBlueOutput;
 	static MObject aColorOutput;
 
 private:

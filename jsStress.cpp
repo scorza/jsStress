@@ -4,10 +4,8 @@
 const char* JSStress::kName = "jsStress";
 MTypeId JSStress::kId(0x00000007);
 
+MObject JSStress::aRefMesh;
 MObject JSStress::aBulgeAmount;
-MObject JSStress::aRedOutput;
-MObject JSStress::aGreenOutput;
-MObject JSStress::aBlueOutput;
 MObject JSStress::aColorOutput;
 
 JSStress::JSStress() : count_(0) {}
@@ -18,6 +16,11 @@ MStatus JSStress::initialize()
 	MStatus status;
 
 	MFnNumericAttribute fnNumeric;
+	MFnTypedAttribute fnTyped;
+	
+	aRefMesh = fnTyped.create("referenceMesh", "referenceMesh", MFnData::kMesh);
+	fnTyped.setHidden(true);
+	addAttribute(aRefMesh);
 
 	aBulgeAmount = fnNumeric.create("bulgeAmount", "bulgeAmount", MFnNumericData::kFloat, 0.5);
 	fnNumeric.setKeyable(true);
@@ -31,12 +34,12 @@ MStatus JSStress::initialize()
 	fnNumeric.setMax(1.0);
 	addAttribute(aColorOutput);
 
-	attributeAffects(inputGeom, outputGeom);
+	attributeAffects(aRefMesh, outputGeom);
 	attributeAffects(aBulgeAmount, outputGeom);
 
+	attributeAffects(aRefMesh, aColorOutput);
 	attributeAffects(inputGeom, aColorOutput);
 	attributeAffects(aBulgeAmount, aColorOutput);
-
 
 	return MS::kSuccess;
 }

@@ -13,6 +13,7 @@
 
 // MFN ATTR INCLUDES
 #include <maya/MFnNumericAttribute.h>
+#include <maya/MFnTypedAttribute.h>
 
 // MFN INCLUDES
 #include <maya/MFnMesh.h>
